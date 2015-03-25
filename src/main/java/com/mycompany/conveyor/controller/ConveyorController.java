@@ -22,6 +22,11 @@ public class ConveyorController {
         return "login";
     }
     
+    @RequestMapping(value="/Conveyor", method = RequestMethod.GET)
+    public String Conveyor(){
+        return "Conveyor";
+    }
+    
     
     @RequestMapping(value="/mainpage", method = RequestMethod.GET)
     public String mainpage()
