@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.conveyor.controller;
+package com.arcticdonkeys.conveyor.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ConveyorController {
     
-    @RequestMapping(value="/login", method = RequestMethod.GET)
+    @RequestMapping(value="/login.html", method = RequestMethod.GET)
     public String login(){
         return "login";
     }
     
-    @RequestMapping(value="/Conveyor", method = RequestMethod.GET)
-    public String Conveyor(){
-        return "Conveyor";
-    }
-    
-    
-    @RequestMapping(value="/mainpage", method = RequestMethod.GET)
+    @RequestMapping(value="/mainpage.html", method = RequestMethod.GET)
     public String mainpage()
     {
         return "mainpage";

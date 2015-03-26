@@ -18,18 +18,12 @@
     
     <servlet-mapping>
         <servlet-name>ConveyorController</servlet-name>
-        <url-pattern>/login</url-pattern>
+        <url-pattern>/login.html</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
         <servlet-name>ConveyorController</servlet-name>
-        <url-pattern>/mainpage</url-pattern>
-    </servlet-mapping>
-    
-    
-    <servlet-mapping>
-        <servlet-name>ConveyorController</servlet-name>
-        <url-pattern>/Conveyor</url-pattern>
+        <url-pattern>/mainpage.html</url-pattern>
     </servlet-mapping>
     
     

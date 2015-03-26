@@ -6,6 +6,6 @@
 
 
     document.getElementById("loginButton").onclick = function () {
-        location.href = "mainpage";
+        location.href = "mainpage.html";
     };
     
