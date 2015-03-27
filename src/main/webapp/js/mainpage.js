@@ -42,6 +42,16 @@ function doubleClickListener(map){
     });
 }
 
+function mouseMoveListener(map){
+    google.maps.event.addListener(map, 'mousemove', function (e){
+        var latitude = document.getElementById('latitude');
+        var longitude = document.getElementById('longitude');
+        
+        latitude.value = e.latLng.lat();
+        longitude.value = e.latLng.lng();
+    });
+}
+
 
 function initializeMap()
 {
@@ -52,6 +62,9 @@ function initializeMap()
         mapTypeId: google.maps.MapTypeId.HYBRID
     }
     var map = new google.maps.Map(mapCanvas,mapOptions);
+    
+    mouseMoveListener(map); /*Haritada mouse move handle eder. 
+ *                            Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
     
     doubleClickListener(map); /*Haritada double click'i handle eder.*/
 }
