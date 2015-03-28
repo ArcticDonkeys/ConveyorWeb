@@ -27,31 +27,30 @@ function addMarker(e, map){
     markers.push(marker);
 }
 
-function doubleClickListener(map){
-    google.maps.event.addListener(map, 'dblclick', function (e){
+function mouseListeners(map)
+{
+    google.maps.event.addListener(map, name, function (e){
+        
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
         
-        latitude.value = e.latLng.lat();
-        longitude.value = e.latLng.lng();
-        
-        removeOtherMarkers(); /*Marker koymadan önce haritadan diğer markerları siler.*/
-        
-        addMarker(e, map); /*Markerı bu fonksiyon oluşturur*/
+        if( name === 'dblclick' )
+        {
+            latitude.value = e.latLng.lat();
+            longitude.value = e.latLng.lng();
+
+            removeOtherMarkers(); /*Marker koymadan önce haritadan diğer markerları siler.*/
+
+            addMarker(e, map); /*Markerı bu fonksiyon oluşturur*/
+        }
+        else if ( name === 'mousemove' )
+        {
+            latitude.value = e.latLng.lat();
+            longitude.value = e.latLng.lng();
+        }
         
     });
 }
-
-function mouseMoveListener(map){
-    google.maps.event.addListener(map, 'mousemove', function (e){
-        var latitude = document.getElementById('latitude');
-        var longitude = document.getElementById('longitude');
-        
-        latitude.value = e.latLng.lat();
-        longitude.value = e.latLng.lng();
-    });
-}
-
 
 function initializeMap()
 {
@@ -63,10 +62,8 @@ function initializeMap()
     }
     var map = new google.maps.Map(mapCanvas,mapOptions);
     
-    mouseMoveListener(map); /*Haritada mouse move handle eder. 
- *                            Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
     
-    doubleClickListener(map); /*Haritada double click'i handle eder.*/
+    mouseListeners(map); // Mouse eventlerini handle eder.
 }
 
 $(document).ready(function(){
