@@ -29,25 +29,24 @@ function addMarker(e, map){
 
 function mouseListeners(map)
 {
-    google.maps.event.addListener(map, name, function (e){
-        
+    google.maps.event.addListener(map, 'rightclick', function (e){
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
-        
-        if( name === 'dblclick' )
-        {
+       /* if( name === 'rightclick' )
+        {*/
+            
             latitude.value = e.latLng.lat();
             longitude.value = e.latLng.lng();
 
             removeOtherMarkers(); /*Marker koymadan önce haritadan diğer markerları siler.*/
 
             addMarker(e, map); /*Markerı bu fonksiyon oluşturur*/
-        }
-        else if ( name === 'mousemove' )
+      //  }
+      /*  else if ( name === 'mousemove' )
         {
             latitude.value = e.latLng.lat();
             longitude.value = e.latLng.lng();
-        }
+        }*/
         
     });
 }
@@ -64,6 +63,26 @@ function initializeMap()
     
     
     mouseListeners(map); // Mouse eventlerini handle eder.
+}
+
+function sendInput() // Sends user input to backend
+{
+    var latitude = (document.getElementById('latitude')).value;
+    var longitude = (document.getElementById('longitude')).value;
+    var magnitude = (document.getElementById('magnitude')).value;
+    var focalDepth = (document.getElementById('focaldepth')).value;
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/Conveyor/mainpage.html",
+        data:  {latData : latitude, lonData : longitude, magData : magnitude, focData : focalDepth} ,
+        success: function(responseData, textStatus) {
+           console.log("Data sent successfully");
+        },
+        error : function(responseData) {
+            console.log("Error in sending data"); 
+        }
+    });
+    
 }
 
 $(document).ready(function(){
