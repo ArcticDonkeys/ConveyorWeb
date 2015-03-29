@@ -35,14 +35,16 @@ function rightClickListener(map){
         latitude.value = e.latLng.lat();
         longitude.value = e.latLng.lng();
         
-        removeOtherMarkers(); /*Marker koymadan önce haritadan diğer markerları siler.*/
+        /*Marker koymadan önce haritadan diğer markerları siler.*/
+        removeOtherMarkers(); 
         
-        addMarker(e, map); /*Markerı bu fonksiyon oluşturur*/
+        /*Markerı bu fonksiyon oluşturur*/
+        addMarker(e, map); 
         
     });
 }
 
-/*function mouseMoveListener(map){
+function mouseMoveListener(map){
     google.maps.event.addListener(map, 'mousemove', function (e){
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
@@ -50,7 +52,7 @@ function rightClickListener(map){
         latitude.value = e.latLng.lat();
         longitude.value = e.latLng.lng();
     });
-}*/
+}
 
 function initializeMap()
 {
@@ -61,10 +63,12 @@ function initializeMap()
         mapTypeId: google.maps.MapTypeId.HYBRID
     }
     var map = new google.maps.Map(mapCanvas,mapOptions);
-     // mouseMoveListener(map); /*Haritada mouse move handle eder. 
- //*                            Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
     
-    rightClickListener(map); /*Haritada right click'i handle eder.*/
+    /*Haritada mouse move handle eder. Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
+    //mouseMoveListener(map); 
+    
+    /*Haritada right click'i handle eder.*/
+    rightClickListener(map); 
 }
 
 function sendInput() // Sends user input to backend
