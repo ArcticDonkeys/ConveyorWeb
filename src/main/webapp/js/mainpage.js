@@ -27,29 +27,30 @@ function addMarker(e, map){
     markers.push(marker);
 }
 
-function mouseListeners(map)
-{
+function rightClickListener(map){
     google.maps.event.addListener(map, 'rightclick', function (e){
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
-       /* if( name === 'rightclick' )
-        {*/
-            
-            latitude.value = e.latLng.lat();
-            longitude.value = e.latLng.lng();
-
-            removeOtherMarkers(); /*Marker koymadan önce haritadan diğer markerları siler.*/
-
-            addMarker(e, map); /*Markerı bu fonksiyon oluşturur*/
-      //  }
-      /*  else if ( name === 'mousemove' )
-        {
-            latitude.value = e.latLng.lat();
-            longitude.value = e.latLng.lng();
-        }*/
+        
+        latitude.value = e.latLng.lat();
+        longitude.value = e.latLng.lng();
+        
+        removeOtherMarkers(); /*Marker koymadan önce haritadan diğer markerları siler.*/
+        
+        addMarker(e, map); /*Markerı bu fonksiyon oluşturur*/
         
     });
 }
+
+/*function mouseMoveListener(map){
+    google.maps.event.addListener(map, 'mousemove', function (e){
+        var latitude = document.getElementById('latitude');
+        var longitude = document.getElementById('longitude');
+        
+        latitude.value = e.latLng.lat();
+        longitude.value = e.latLng.lng();
+    });
+}*/
 
 function initializeMap()
 {
@@ -60,9 +61,10 @@ function initializeMap()
         mapTypeId: google.maps.MapTypeId.HYBRID
     }
     var map = new google.maps.Map(mapCanvas,mapOptions);
+     // mouseMoveListener(map); /*Haritada mouse move handle eder. 
+ //*                            Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
     
-    
-    mouseListeners(map); // Mouse eventlerini handle eder.
+    rightClickListener(map); /*Haritada right click'i handle eder.*/
 }
 
 function sendInput() // Sends user input to backend
