@@ -5,6 +5,28 @@
  */
 
 var markers = [];
+var buildingLocations = [
+                        {location: new google.maps.LatLng(40.958775, 29.11032), weight: 0.5},
+                        {location: new google.maps.LatLng(40.951774, 29.089231), weight: 2},
+                        {location: new google.maps.LatLng(40.966293, 29.053698), weight: 1},
+                        {location: new google.maps.LatLng(40.968756, 29.031725), weight: 1.5},
+                        {location: new google.maps.LatLng(40.978995, 29.037905), weight: 3},
+                        {location: new google.maps.LatLng(40.986900, 29.019365), weight: 2.5},
+                        {location: new google.maps.LatLng(41.001929, 29.026232), weight: 1.5},
+                        {location: new google.maps.LatLng(41.009961, 29.042883), weight: 2.0},
+                        {location: new google.maps.LatLng(41.001670, 29.047346), weight: 0.5},
+                        {location: new google.maps.LatLng(40.988714, 29.084253), weight: 2},
+                        {location: new google.maps.LatLng(40.977828, 29.097986), weight: 3}
+                        ];
+
+function buildHeatMap(map){
+    
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+       data: buildingLocations
+    });
+    
+    heatmap.setMap(map);
+}
 
 function removeOtherMarkers(){
     for(var i = 0; i < markers.length; i++)
@@ -41,6 +63,8 @@ function rightClickListener(map){
         /*Markerı bu fonksiyon oluşturur*/
         addMarker(e, map); 
         
+        
+        
     });
 }
 
@@ -69,6 +93,12 @@ function initializeMap()
     
     /*Haritada right click'i handle eder.*/
     rightClickListener(map); 
+    
+    /*Haritada heat map oluşturur.*/
+    buildHeatMap(map);
+
+   
+    
 }
 
 function sendInput() // Sends user input to backend
