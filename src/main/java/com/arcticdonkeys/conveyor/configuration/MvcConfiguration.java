@@ -32,7 +32,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         dataSource.setUrl("jdbc:mysql://localhost:3306/ConveyorWeb");
         dataSource.setUsername("root");
         dataSource.setPassword("33on64R9");
-         
+        
         return dataSource;
     }
     
