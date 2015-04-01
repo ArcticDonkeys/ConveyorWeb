@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.arcticdonkeys.conveyor.classes.AttenuationAlgorithm;
+import com.arcticdonkeys.conveyor.dao.CBuildingDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -18,6 +20,10 @@ import com.arcticdonkeys.conveyor.classes.AttenuationAlgorithm;
 @Controller
 public class ConveyorController {
 
+    @Autowired
+    private CBuildingDAO buildingDAO;
+    
+    
     @RequestMapping(value = "/login.html", method = RequestMethod.GET)
     public String login() {
         return "login";
@@ -25,6 +31,9 @@ public class ConveyorController {
 
     @RequestMapping(value = "/mainpage.html", method = RequestMethod.GET)
     public String mainpage() {
+        
+        buildingDAO.createTable();
+        
         return "mainpage";
     }
 
