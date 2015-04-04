@@ -8,8 +8,11 @@ package com.arcticdonkeys.conveyor.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import com.arcticdonkeys.conveyor.classes.AttenuationAlgorithm;
+import com.arcticdonkeys.conveyor.domain.Building;
+import com.arcticdonkeys.conveyor.services.BuildingService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -18,7 +21,8 @@ import com.arcticdonkeys.conveyor.classes.AttenuationAlgorithm;
 @Controller
 public class ConveyorController {
 
-    
+    @Autowired
+    BuildingService buildingService;
     
     @RequestMapping(value = "/login.html", method = RequestMethod.GET)
     public String login() {
@@ -28,6 +32,11 @@ public class ConveyorController {
     @RequestMapping(value = "/mainpage.html", method = RequestMethod.GET)
     public String mainpage() {
         
+        List<Building> buildingList = buildingService.listBuildings();
+        
+        for (Building building : buildingList) {
+            System.out.println("buildingID: " + building.getBuildingID());
+        }
         
         return "mainpage";
     }
