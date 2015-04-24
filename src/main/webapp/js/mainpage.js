@@ -20,6 +20,12 @@ var buildingLocations = [
                         {location: new google.maps.LatLng(40.977828, 29.097986), weight: 3}
                         ];
 
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var start = new google.maps.LatLng(40.974070, 29.063311);
+var end = new google.maps.LatLng(40.985345, 29.067602);
+
+
 function buildHeatMap(map){
     
     var heatmap = new google.maps.visualization.HeatmapLayer({
@@ -80,6 +86,9 @@ function mouseMoveListener(map){
 
 function initializeMap()
 {
+    /*Direction Render eder*/
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    
     var mapCanvas = document.getElementById('map-canvas');
     var mapOptions = {
         center: new google.maps.LatLng(41.002731, 28.995700),
@@ -87,6 +96,9 @@ function initializeMap()
         mapTypeId: google.maps.MapTypeId.HYBRID
     }
     var map = new google.maps.Map(mapCanvas,mapOptions);
+    
+    /*Direction Map'ini set eder*/
+    directionsDisplay.setMap(map);
     
     /*Haritada mouse move handle eder. Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
     //mouseMoveListener(map); 
@@ -97,6 +109,9 @@ function initializeMap()
     
     /*Haritada heat map oluşturur.*/
     buildHeatMap(map);
+    
+    /*Haritada route oluşturur.*/
+    calculateRoute();
 }
 
 function sendInput() // Sends user input to backend
@@ -117,6 +132,22 @@ function sendInput() // Sends user input to backend
         }
     });
     
+}
+
+function calculateRoute()
+{
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+    
+    directionsService.route(request, function(response,status){
+       if(status === google.maps.DirectionsStatus.OK)
+       {
+           directionsDisplay.setDirections(response);
+       }
+    });
 }
 
 $(document).ready(function(){
