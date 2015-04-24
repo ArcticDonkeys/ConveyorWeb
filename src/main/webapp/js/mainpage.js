@@ -211,7 +211,7 @@ var kadikoy = new google.maps.Polygon({
 
 var markers = [];
 
-var buildingLocations;
+var buildingLocations = [];
         
         /*[
                         {location: new google.maps.LatLng(40.958775, 29.11032), weight: 0.5},

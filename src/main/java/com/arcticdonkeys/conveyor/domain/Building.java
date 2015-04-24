@@ -10,7 +10,6 @@ package com.arcticdonkeys.conveyor.domain;
  * @author OnurYilmaz
  */
 public class Building {
-    private int buildingID;
     private float buildingLat;
     private float buildingLon;
     private int buildingAge;
@@ -20,13 +19,13 @@ public class Building {
     private String buildingDistrict;
     private int buildingNumOfRooms;
     private String buildingHeatMaterial;
+    private String buildingStatus;
     private float risk;
 
     public Building() {
     }
 
-    public Building(int buildingID, float buildingLat, float buildingLon, int buildingAge, int buildingFloor, String buildingConstructionMaterial, String buildingGround, String buildingDistrict, int buildingNumOfRooms, String buildingHeatMaterial, float risk) {
-        this.buildingID = buildingID;
+    public Building( float buildingLat, float buildingLon, int buildingAge, int buildingFloor, String buildingConstructionMaterial, String buildingGround, String buildingDistrict, int buildingNumOfRooms, String buildingHeatMaterial, String buildingStatus,float risk) {
         this.buildingLat = buildingLat;
         this.buildingLon = buildingLon;
         this.buildingAge = buildingAge;
@@ -36,16 +35,19 @@ public class Building {
         this.buildingDistrict = buildingDistrict;
         this.buildingNumOfRooms = buildingNumOfRooms;
         this.buildingHeatMaterial = buildingHeatMaterial;
+        this.buildingStatus = buildingStatus;
         this.risk = 0;
     }
 
-    public int getBuildingID() {
-        return buildingID;
+    public String getBuildingStatus() {
+        return buildingStatus;
     }
 
-    public void setBuildingID(int buildingID) {
-        this.buildingID = buildingID;
+    public void setBuildingStatus(String buildingStatus) {
+        this.buildingStatus = buildingStatus;
     }
+
+    
 
     public float getBuildingLat() {
         return buildingLat;

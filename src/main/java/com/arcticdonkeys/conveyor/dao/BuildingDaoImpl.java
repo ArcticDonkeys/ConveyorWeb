@@ -29,7 +29,6 @@ public class BuildingDaoImpl implements BuildingDao{
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         
         jdbcTemplate.update(sql, new Object[]{
-            building.getBuildingID(),
             building.getBuildingLat(),
             building.getBuildingLon(),
             building.getBuildingAge(),
@@ -39,6 +38,7 @@ public class BuildingDaoImpl implements BuildingDao{
             building.getBuildingDistrict(),
             building.getBuildingNumOfRooms(),
             building.getBuildingHeatMaterial(),
+            building.getBuildingStatus(),
             building.getRisk()});
         
     }

@@ -22,16 +22,16 @@ public class BuildingExtractor implements ResultSetExtractor<Building>{
 
         Building building = new Building();
         
-        building.setBuildingID(rs.getInt(1));
-        building.setBuildingLat(rs.getFloat(2));
-        building.setBuildingLon(rs.getFloat(3));
-        building.setBuildingAge(rs.getInt(4));
-        building.setBuildingFloor(rs.getInt(5));
-        building.setBuildingConstructionMaterial(rs.getString(6));
-        building.setBuildingGround(rs.getString(7));
-        building.setBuildingDistrict(rs.getString(8));
-        building.setBuildingNumOfRooms(rs.getInt(9));
-        building.setBuildingHeatMaterial(rs.getString(10));
+        building.setBuildingLat(rs.getFloat(1));
+        building.setBuildingLon(rs.getFloat(2));
+        building.setBuildingAge(rs.getInt(3));
+        building.setBuildingFloor(rs.getInt(4));
+        building.setBuildingConstructionMaterial(rs.getString(5));
+        building.setBuildingGround(rs.getString(6));
+        building.setBuildingDistrict(rs.getString(7));
+        building.setBuildingNumOfRooms(rs.getInt(8));
+        building.setBuildingHeatMaterial(rs.getString(9));
+        building.setBuildingStatus(rs.getString(10));
         building.setRisk(rs.getFloat(11));
         
         return building;

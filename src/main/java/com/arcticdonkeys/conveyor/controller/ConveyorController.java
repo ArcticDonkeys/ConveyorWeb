@@ -35,7 +35,7 @@ public class ConveyorController {
         List<Building> buildingList = buildingService.listBuildings();
         
         for (Building building : buildingList) {
-            System.out.println("buildingID: " + building.getBuildingID());
+            System.out.println("buildingID: " + building.getBuildingLat());
         }
         
         return "mainpage";
