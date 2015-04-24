@@ -202,7 +202,7 @@ var kadikoy = new google.maps.Polygon({
     paths: borderLocations
   });
   
-var point = new google.maps.LatLng(60.981068, 29.061937);
+//var point = new google.maps.LatLng(60.981068, 29.061937);
 
 
 
@@ -211,7 +211,9 @@ var point = new google.maps.LatLng(60.981068, 29.061937);
 
 var markers = [];
 
-var buildingLocations = [
+var buildingLocations;
+        
+        /*[
                         {location: new google.maps.LatLng(40.958775, 29.11032), weight: 0.5},
                         {location: new google.maps.LatLng(40.951774, 29.089231), weight: 2},
                         {location: new google.maps.LatLng(40.966293, 29.053698), weight: 1},
@@ -223,12 +225,39 @@ var buildingLocations = [
                         {location: new google.maps.LatLng(41.001670, 29.047346), weight: 0.5},
                         {location: new google.maps.LatLng(40.988714, 29.084253), weight: 2},
                         {location: new google.maps.LatLng(40.977828, 29.097986), weight: 3}
-                        ];
+                        ];*/
 
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var start = new google.maps.LatLng(40.974070, 29.063311);
 var end = new google.maps.LatLng(40.985345, 29.067602);
+
+/***********SILINECEK*******/
+function createPoints()
+{
+var differenceBetweenXCoords = 29.123726 - 29.009056;
+var differenceBetweenYCoords = 41.009180 - 40.935303;
+var latitude;
+var longitude;
+for(var i = 0; i<25328; i++)
+{
+    latitude = (Math.random() * (differenceBetweenYCoords) + 40.935303);
+    longitude = (Math.random() * (differenceBetweenXCoords) + 29.009056);
+    var point = new google.maps.LatLng(latitude, longitude);
+    var output = google.maps.geometry.poly.containsLocation(point, kadikoy);
+    if(output)
+    {
+        buildingLocations[i] = {location: point, weight: 0.5}
+    }
+    else
+        i--;
+}
+}
+
+
+
+
+//////////////////
 
 
 function buildHeatMap(map){
@@ -311,7 +340,7 @@ function initializeMap()
     /*Haritada right click'i handle eder.*/
     rightClickListener(map); 
     
-    
+    createPoints();
     /*Haritada heat map oluşturur.*/
     buildHeatMap(map);
     
@@ -319,8 +348,7 @@ function initializeMap()
     calculateRoute(start, end);
 //    calculateRoute(start, end1);
     
-    var output = google.maps.geometry.poly.containsLocation(point, kadikoy);
-    console.log(output);
+    
 }
 
 function sendInput() // Sends user input to backend
