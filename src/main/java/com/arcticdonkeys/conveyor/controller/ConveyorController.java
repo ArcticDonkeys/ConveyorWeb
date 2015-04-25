@@ -34,18 +34,24 @@ public class ConveyorController {
     @RequestMapping(value = "/mainpage.html", method = RequestMethod.GET)
     public String mainpage() {
         
-        buildingList = buildingService.listBuildings();
+       // buildingList = buildingService.listBuildings();
         return "mainpage";
     }
 
     @RequestMapping(value = "/mainpage.html", method = RequestMethod.POST)
     public void getAttenuationInputs(String latData, String lonData, String magData, String focData) {
+        ArrayList<Double> treeResult = new ArrayList<>();
         AttenuationAlgorithm aa = new AttenuationAlgorithm();
         double result = aa.attenuation(Double.parseDouble(magData),
                                        Double.parseDouble(latData), 
                                        Double.parseDouble(lonData), 40.123, 31.67, 
                                        Double.parseDouble(focData), 2);
         System.out.println(result);
-        aa.decisionTree();
+        treeResult = aa.decisionTree();
+        for(int i= 0; i<treeResult.size(); i+=3)
+        {
+
+             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + treeResult.get(i+2) + "},");
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.arcticdonkeys.conveyor.controller.ConveyorController;
 import com.arcticdonkeys.conveyor.domain.Building;
 import com.arcticdonkeys.conveyor.services.BuildingService;
 import java.lang.Math;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -75,13 +76,119 @@ public class AttenuationAlgorithm {
                 + Math.pow((lonOfEarthquake - lonOfBuilding), 2)) / 1000;
     }
 
-    public int decisionTree() {
-        
+    public ArrayList<Double> decisionTree() {
+
+        ArrayList<Double> resultArray = new ArrayList<>();
         for (Building building : ConveyorController.buildingList) {
-             System.out.printf( "\t%.15f\n", building.getBuildingLat());
-             System.out.println("");
-         
+            String buildingType = building.getBuildingConstructionMaterial();
+            String buildingCondition = building.getBuildingStatus();
+            int numberOfStorey = building.getBuildingFloor();
+            int buildingAge = building.getBuildingAge();
+            double lat = building.getBuildingLat();
+            double lon = building.getBuildingLon();
+            double result = 1;
+            resultArray.add(lat);
+            resultArray.add(lon);
+            switch (buildingType) {
+                case "agac":
+                    result *= 0.01;
+                    break;
+                case "briket":
+                    result *= 0.6;
+                    break;
+                case "tas":
+                    result *= 0.8;
+                    break;
+                case "tugla":
+                    result *= 0.4;
+                    break;
+                case "beton":
+                    result *= 0.2;
+                    break;
+            }
+            
+            switch (buildingCondition) {
+                case "TadilatYok":
+                    result *= 0.01;
+                    break;
+                case "BasitTamir":
+                    result *= 0.35;
+                    break;
+                case "EsasliTamir":
+                    result *= 0.67;
+                    break;
+                case "Harap":
+                    result *= 0.99;
+                    break;
+            }
+            
+            switch (numberOfStorey) {
+                case 1:
+                    result *= 0.01;
+                    break;
+                case 2:
+                    result *= 0.17;
+                    break;
+                case 3:
+                    result *= 0.32;
+                    break;
+                case 4:
+                    result *= 0.5;
+                    break;
+                case 5:
+                    result *= 0.67;
+                    break;
+                case 6:
+                    result *= 0.82;
+                    break;
+                case 7:
+                    result *= 0.99;
+                    break;  
+                case 8:
+                    result *= 0.99;
+                    break;
+                case 9:
+                    result *= 0.99;
+                    break;
+                case 10:
+                    result *= 0.99;
+                    break;     
+            }
+            
+            switch (buildingAge) {
+                case 1929:
+                    result *= 0.56;
+                    break;
+                case 1930:
+                    result *= 0.46;
+                    break;
+                case 1940:
+                    result *= 0.34;
+                    break;
+                case 1950:
+                    result *= 0.22;
+                    break;
+                case 1960:
+                    result *= 0.12;
+                    break;
+                case 1970:
+                    result *= 0.79;
+                    break;
+                case 1980:
+                    result *= 0.90;
+                    break;  
+                case 1990:
+                    result *= 0.99;
+                    break;
+                default:
+                    result *= 0.01;
+                    break;
+            }
+            
+            resultArray.add(result);
         }
-        return 5;
+        return resultArray;
+                
+
     }
 }
