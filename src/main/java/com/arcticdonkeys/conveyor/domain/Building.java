@@ -10,8 +10,8 @@ package com.arcticdonkeys.conveyor.domain;
  * @author OnurYilmaz
  */
 public class Building {
-    private float buildingLat;
-    private float buildingLon;
+    private double buildingLat;
+    private double buildingLon;
     private int buildingAge;
     private int buildingFloor;
     private String buildingConstructionMaterial;
@@ -20,12 +20,12 @@ public class Building {
     private int buildingNumOfRooms;
     private String buildingHeatMaterial;
     private String buildingStatus;
-    private float risk;
+    private double risk;
 
     public Building() {
     }
 
-    public Building( float buildingLat, float buildingLon, int buildingAge, int buildingFloor, String buildingConstructionMaterial, String buildingGround, String buildingDistrict, int buildingNumOfRooms, String buildingHeatMaterial, String buildingStatus,float risk) {
+    public Building( double buildingLat, double buildingLon, int buildingAge, int buildingFloor, String buildingConstructionMaterial, String buildingGround, String buildingDistrict, int buildingNumOfRooms, String buildingHeatMaterial, String buildingStatus,double risk) {
         this.buildingLat = buildingLat;
         this.buildingLon = buildingLon;
         this.buildingAge = buildingAge;
@@ -36,7 +36,7 @@ public class Building {
         this.buildingNumOfRooms = buildingNumOfRooms;
         this.buildingHeatMaterial = buildingHeatMaterial;
         this.buildingStatus = buildingStatus;
-        this.risk = 0;
+        this.risk = 0.0;
     }
 
     public String getBuildingStatus() {
@@ -49,19 +49,19 @@ public class Building {
 
     
 
-    public float getBuildingLat() {
+    public double getBuildingLat() {
         return buildingLat;
     }
 
-    public void setBuildingLat(float buildingLat) {
+    public void setBuildingLat(double buildingLat) {
         this.buildingLat = buildingLat;
     }
 
-    public float getBuildingLon() {
+    public double getBuildingLon() {
         return buildingLon;
     }
 
-    public void setBuildingLon(float buildingLon) {
+    public void setBuildingLon(double buildingLon) {
         this.buildingLon = buildingLon;
     }
 
@@ -121,11 +121,11 @@ public class Building {
         this.buildingHeatMaterial = buildingHeatMaterial;
     }
 
-    public float getRisk() {
+    public double getRisk() {
         return risk;
     }
 
-    public void setRisk(float risk) {
+    public void setRisk(double risk) {
         this.risk = risk;
     }
     

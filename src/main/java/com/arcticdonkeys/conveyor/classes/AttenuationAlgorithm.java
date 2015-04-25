@@ -1,17 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.arcticdonkeys.conveyor.classes;
 
 /**
  *
  * @author Arda
  */
+import com.arcticdonkeys.conveyor.controller.ConveyorController;
+import com.arcticdonkeys.conveyor.domain.Building;
+import com.arcticdonkeys.conveyor.services.BuildingService;
 import java.lang.Math;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AttenuationAlgorithm {
+    @Autowired
+    BuildingService buildingService;
 
     public double attenuation(double magnitude, double latOfEarthquake,
             double lonOfEarthquake, double latOfBuilding, double lonOfBuilding,
@@ -71,5 +74,14 @@ public class AttenuationAlgorithm {
         return Math.sqrt(Math.pow((latOfEarthquake - latOfBuilding), 2)
                 + Math.pow((lonOfEarthquake - lonOfBuilding), 2)) / 1000;
     }
-}
 
+    public int decisionTree() {
+        
+        for (Building building : ConveyorController.buildingList) {
+             System.out.printf( "\t%.15f\n", building.getBuildingLat());
+             System.out.println("");
+         
+        }
+        return 5;
+    }
+}

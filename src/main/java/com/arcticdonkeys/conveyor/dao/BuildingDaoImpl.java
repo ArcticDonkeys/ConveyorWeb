@@ -24,7 +24,7 @@ public class BuildingDaoImpl implements BuildingDao{
     
     @Override
     public void insertBuilding(Building building) {
-        String sql = "INSERT INTO `conveyordb`.`Building` (`buildingID`, `buildingLat`, `buildingLon`, `buildingAge`, `buildingFloor`, `buildingConstructionMaterial`, `buildingGround`, `buildingDistrict`, `buildingNumOfRoom`, `buildingHeatMaterial`) VALUES ('2', '100', '102', '8', '8', 'mat', 'ground', 'dist', '5', 'heat')";
+        String sql = "INSERT INTO `conveyordb`.`BuildingTest` (`buildingID`, `buildingLat`, `buildingLon`, `buildingAge`, `buildingFloor`, `buildingConstructionMaterial`, `buildingGround`, `buildingDistrict`, `buildingNumOfRoom`, `buildingHeatMaterial`) VALUES ('2', '100', '102', '8', '8', 'mat', 'ground', 'dist', '5', 'heat')";
         
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         
@@ -48,7 +48,7 @@ public class BuildingDaoImpl implements BuildingDao{
         
         List buildingList = new ArrayList();
         
-        String sql = "SELECT * FROM `conveyordb`.`Building`";
+        String sql = "SELECT * FROM `conveyordb`.`BuildingTest`";
         
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         
