@@ -202,9 +202,7 @@ var bagcilar = new google.maps.Polygon({
 var markers = [];
 
 var buildingLocations =
-        
-        [
-{location: new google.maps.LatLng(41.0042079045504, 29.07502792133937), weight: 2.8000000000000003E-5},
+        [{location: new google.maps.LatLng(41.0042079045504, 29.07502792133937), weight: 2.8000000000000003E-5},
 {location: new google.maps.LatLng(40.964817107080506, 29.103688781455276), weight: 2.8000000000000003E-5},
 {location: new google.maps.LatLng(40.96461502442564, 29.080382615660028), weight: 2.8000000000000003E-5},
 {location: new google.maps.LatLng(41.004483759980346, 29.096536669015336), weight: 2.8000000000000003E-5},
@@ -25533,8 +25531,10 @@ var buildingLocations =
 {location: new google.maps.LatLng(40.978234816813504, 29.077422298697), weight: 0.0019602},
 {location: new google.maps.LatLng(40.97157154308723, 29.062953788768368), weight: 0.0019602},
 {location: new google.maps.LatLng(40.97157154308723, 29.062953788768368), weight: 0.0019602}];
+        
+       
 
-var directionsDisplay;
+//var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var start = new google.maps.LatLng(40.974070, 29.063311);
 var end = new google.maps.LatLng(40.985345, 29.067602);
@@ -25633,7 +25633,7 @@ function mouseMoveListener(map){
 function initializeMap()
 {
     /*Direction Render eder*/
-    directionsDisplay = new google.maps.DirectionsRenderer();
+    //directionsDisplay = new google.maps.DirectionsRenderer();
     
     var mapCanvas = document.getElementById('map-canvas');
     var mapOptions = {
@@ -25644,7 +25644,7 @@ function initializeMap()
     var map = new google.maps.Map(mapCanvas,mapOptions);
     
     /*Direction Map'ini set eder*/
-    directionsDisplay.setMap(map);
+    //directionsDisplay.setMap(map);
     
     /*Haritada mouse move handle eder. Mouse hareket ettikçe lat ve lon bilgilerini günceller.*/
     //mouseMoveListener(map); 
@@ -25655,9 +25655,9 @@ function initializeMap()
     //createPoints();
     /*Haritada heat map oluşturur.*/
     buildHeatMap(map);
-    
+    buildRoute(map);
     /*Haritada route oluşturur.*/
-    calculateRoute(start, end);
+    //calculateRoute(start, end);
 //    calculateRoute(start, end1);
     
     
@@ -25681,6 +25681,95 @@ function sendInput() // Sends user input to backend
         }
     });
     
+}
+
+function buildRoute(map)
+{
+	var afadCoordinates = new google.maps.LatLng(40.992936, 29.069479);
+	var mostRiskyFirst = new google.maps.LatLng(40.9659004337, 29.0720558166);
+	var mostRiskySecond = new google.maps.LatLng(40.9959657667, 29.1098213195);
+	var mostRiskyThird = new google.maps.LatLng(40.992337919312, 29.059524536132);
+
+	
+		var request1 = {
+			origin: afadCoordinates,
+			destination : mostRiskyFirst,
+			travelMode: google.maps.TravelMode.DRIVING
+                    };
+
+		var directionsDisplay = new google.maps.DirectionsRenderer({
+                    polylineOptions: {
+                        strokeColor: "red",
+                        strokeWeight: 7,
+                        strokeOpacity: 0.8
+                    },
+                    preserveViewport: true
+                });
+
+		directionsDisplay.setMap(map);	
+
+		directionsService.route(request1, function(response, status){
+
+			if(status === google.maps.DirectionsStatus.OK)
+			{
+				directionsDisplay.setDirections(response);
+			}
+		});
+                
+                var request2 = {
+			origin: afadCoordinates,
+			destination : mostRiskySecond,
+			travelMode: google.maps.TravelMode.DRIVING
+                    };
+
+		var directionsDisplay2 = new google.maps.DirectionsRenderer({
+                    polylineOptions: {
+                        strokeColor: "blue",
+                        strokeWeight: 7,
+                        strokeOpacity: 0.5
+                    },
+                    preserveViewport: true
+                });
+
+		directionsDisplay2.setMap(map);	
+
+		directionsService.route(request2, function(response, status){
+
+			if(status === google.maps.DirectionsStatus.OK)
+			{
+				directionsDisplay2.setDirections(response);
+			}
+		});
+                
+                var request3 = {
+			origin: afadCoordinates,
+			destination : mostRiskyThird,
+			travelMode: google.maps.TravelMode.DRIVING
+                    };
+
+		var directionsDisplay3 = new google.maps.DirectionsRenderer(
+                        {
+                    polylineOptions: {
+                        strokeColor: "#A534C9",
+                        strokeWeight: 7,
+                        strokeOpacity: 0.7
+                    },
+                    preserveViewport: true
+                });
+
+		directionsDisplay3.setMap(map);	
+
+		directionsService.route(request3, function(response, status){
+
+			if(status === google.maps.DirectionsStatus.OK)
+			{
+				directionsDisplay3.setDirections(response);
+			}
+		});
+
+
+
+	
 }
 
 function calculateRoute(start, end)

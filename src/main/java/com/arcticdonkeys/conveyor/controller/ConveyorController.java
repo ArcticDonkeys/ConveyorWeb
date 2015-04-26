@@ -34,7 +34,7 @@ public class ConveyorController {
     @RequestMapping(value = "/mainpage.html", method = RequestMethod.GET)
     public String mainpage() {
         
-       // buildingList = buildingService.listBuildings();
+        //buildingList = buildingService.listBuildings();
         return "mainpage";
     }
 
@@ -50,8 +50,12 @@ public class ConveyorController {
         treeResult = aa.decisionTree();
         for(int i= 0; i<treeResult.size(); i+=3)
         {
-
-             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + treeResult.get(i+2) + "},");
+            if(i < treeResult.size()/3)
+             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + 0.1 + "},");
+            else if(i < 2*treeResult.size()/3)
+             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + 0.5 + "},");
+            else
+             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + 1 + "},");
         }
     }
 }
