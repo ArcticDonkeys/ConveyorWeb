@@ -79,6 +79,7 @@ public class AttenuationAlgorithm {
     public ArrayList<Double> decisionTree() {
 
         ArrayList<Double> resultArray = new ArrayList<>();
+        System.out.println(ConveyorController.buildingList.size());
         for (Building building : ConveyorController.buildingList) {
             String buildingType = building.getBuildingConstructionMaterial();
             String buildingCondition = building.getBuildingStatus();

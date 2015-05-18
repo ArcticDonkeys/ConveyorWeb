@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Conveyor User Input Interface</title>
+
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/prefixfree.min.js"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization,geometry"></script>-->
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=visualization,geometry"></script>
+    
+
+</head>
+
+<body>
+    <div class="image">
+        
+    </div>
+    <div class="header">
+            <div>Conveyor User Input Interface</div>
+    </div>
+
+    <div class="row">
+        <div class="inputDiv">
+            <select name="district">
+                <option value = "-1" disabled selected>Please Select a District</option>
+                <option value="kadikoy">Kadikoy</option>
+                <option value="bagcilar">Bagcilar</option>
+            </select>
+            <input type="text" placeholder="Latitude" name="latitude" id="latitude">
+            <input type="text" placeholder="Longitude" name="longitude" id="longitude">
+            <input type="text" placeholder="Magnitude" name="magnitude" id="magnitude">
+            <input type="text" placeholder="Focal Depth" name="focalDepth" id="focaldepth">
+            <input id="sendButton" type="button" value="Send" onClick="sendInput()">
+
+        </div>
+
+    </div>
+    <div id="map-canvas"></div>
+
+
+    <script src='js/jquery.js'></script>
+    <script src='js/mainpage.js'></script>
+
+  
+</body>
+
+</html>

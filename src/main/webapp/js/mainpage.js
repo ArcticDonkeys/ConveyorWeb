@@ -194,12 +194,21 @@ var bagcilar = new google.maps.Polygon({
   
 //var point = new google.maps.LatLng(60.981068, 29.061937);
 
-
+var mapCanvas = document.getElementById('map-canvas');
+    var mapOptions = {
+        center: new google.maps.LatLng(40.98352660152382, 29.07308578491211),
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    }
+    var map = new google.maps.Map(mapCanvas,mapOptions);
 
 
 /*****************************************************/
 
 var markers = [];
+
+var buildingLocations = [];
+    /*
 
 var buildingLocations =
         [{location: new google.maps.LatLng(41.0042079045504, 29.07502792133937), weight: 2.8000000000000003E-5},
@@ -25530,9 +25539,7 @@ var buildingLocations =
 {location: new google.maps.LatLng(40.9699194764178, 29.04228476430933), weight: 0.0019602},
 {location: new google.maps.LatLng(40.978234816813504, 29.077422298697), weight: 0.0019602},
 {location: new google.maps.LatLng(40.97157154308723, 29.062953788768368), weight: 0.0019602},
-{location: new google.maps.LatLng(40.97157154308723, 29.062953788768368), weight: 0.0019602}];
-        
-       
+{location: new google.maps.LatLng(40.97157154308723, 29.062953788768368), weight: 0.0019602}];*/
 
 //var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
@@ -25554,8 +25561,8 @@ for(var i = 0; i<29530; i++)
     var output = google.maps.geometry.poly.containsLocation(point, bagcilar);
     if(output)
     {
-        buildingLocations[i] = {location: point, weight: 0.5}
-        console.log(point.lat() + " " + point.lng());
+        buildingLocations[i] = {location: point, weight: 0.2}
+        //console.log(point.lat() + " " + point.lng());
     }
     else
         i--;
@@ -25568,16 +25575,20 @@ for(var i = 0; i<29530; i++)
 //////////////////
 
 
-function buildHeatMap(map){
+function buildHeatMap(){
     
     var heatmap = new google.maps.visualization.HeatmapLayer({
        data: buildingLocations,
        dissipating: true,
        map: map,
-       radius: 12,
+       radius: 15,
        maxIntensity: 1
     });
-
+    
+    //console.log(buildingLocations);
+    
+    
+    heatmap.setMap(map);
   
 }
 
@@ -25591,7 +25602,7 @@ function removeOtherMarkers(){
     markers = [];
 }
 
-function addMarker(e, map){
+function addMarker(e){
     
     var marker = new google.maps.Marker({
             position: e.latLng,
@@ -25603,7 +25614,7 @@ function addMarker(e, map){
     markers.push(marker);
 }
 
-function rightClickListener(map){
+function rightClickListener(){
     google.maps.event.addListener(map, 'rightclick', function (e){
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
@@ -25620,7 +25631,7 @@ function rightClickListener(map){
     });
 }
 
-function mouseMoveListener(map){
+function mouseMoveListener(){
     google.maps.event.addListener(map, 'mousemove', function (e){
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
@@ -25635,13 +25646,7 @@ function initializeMap()
     /*Direction Render eder*/
     //directionsDisplay = new google.maps.DirectionsRenderer();
     
-    var mapCanvas = document.getElementById('map-canvas');
-    var mapOptions = {
-        center: new google.maps.LatLng(41.002731, 28.995700),
-        zoom: 11,
-        mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-    var map = new google.maps.Map(mapCanvas,mapOptions);
+    
     
     /*Direction Map'ini set eder*/
     //directionsDisplay.setMap(map);
@@ -25654,7 +25659,7 @@ function initializeMap()
     
     //createPoints();
     /*Haritada heat map oluşturur.*/
-    buildHeatMap(map);
+    //buildHeatMap(map);
     buildRoute(map);
     /*Haritada route oluşturur.*/
     //calculateRoute(start, end);
@@ -25662,6 +25667,27 @@ function initializeMap()
     
     
 }
+
+function parseAndPush(dataFromController)
+{
+    var splittedByComma = dataFromController.split(",");
+    for(var i = 0; i<splittedByComma.length; i++)
+    {
+        var splittedBySpace = splittedByComma[i].split(" ");
+        
+        var building = {
+            location: new google.maps.LatLng(splittedBySpace[0], splittedBySpace[1]),
+            weight: parseFloat(splittedBySpace[2])
+        };
+        
+        buildingLocations.push(building);
+    
+        
+    }
+    buildHeatMap(map);
+    
+}
+
 
 function sendInput() // Sends user input to backend
 {
@@ -25674,16 +25700,40 @@ function sendInput() // Sends user input to backend
         url: "http://localhost:8080/Conveyor/mainpage.html",
         data:  {latData : latitude, lonData : longitude, magData : magnitude, focData : focalDepth} ,
         success: function(responseData, textStatus) {
-           console.log("Data sent successfully");
+            window.alert("Success");
+            parseAndPush(responseData);
         },
         error : function(responseData) {
-            console.log("Error in sending data"); 
+            console.log(responseData); 
         }
     });
+
+    /*var millisecondsToWait = 10000;
+    setTimeout(function() {
+       location.href = " sendOutput.html"
+     //building location doldurulacak
+    $.ajax({
+        url:'http://localhost:8080/Conveyor/sendOutput.html',
+        data: {},
+        type:"GET",
+        success:function(data) {
+        console.log("essseek")
+        console.log(data);
+        },
+         error : function(responseData) {
+
+            console.log(responseData); 
+            console.log("errror");
+        }
+    })
+}, millisecondsToWait);
+    */
+    
     
 }
 
-function buildRoute(map)
+
+function buildRoute()
 {
 	var afadCoordinates = new google.maps.LatLng(40.992936, 29.069479);
 	var mostRiskyFirst = new google.maps.LatLng(40.9659004337, 29.0720558166);

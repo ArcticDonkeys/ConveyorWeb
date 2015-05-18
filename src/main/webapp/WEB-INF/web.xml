@@ -26,6 +26,11 @@
         <url-pattern>/mainpage.html</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>ConveyorController</servlet-name>
+        <url-pattern>/sendOutput.html</url-pattern>
+    </servlet-mapping>
+    
     
     <welcome-file-list>
         <welcome-file>/WEB-INF/html/login.html</welcome-file>

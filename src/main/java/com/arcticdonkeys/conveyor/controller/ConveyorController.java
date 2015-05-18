@@ -13,7 +13,16 @@ import com.arcticdonkeys.conveyor.domain.Building;
 import com.arcticdonkeys.conveyor.services.BuildingService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import static javax.ws.rs.client.Entity.json;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import static org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.json;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -23,6 +32,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ConveyorController {
     @Autowired
     BuildingService buildingService;
+    public double result;
+     public ArrayList<Double> treeResult = new ArrayList<>();
     public static List<Building> buildingList = new ArrayList<>();
     
     
@@ -34,28 +45,54 @@ public class ConveyorController {
     @RequestMapping(value = "/mainpage.html", method = RequestMethod.GET)
     public String mainpage() {
         
-        //buildingList = buildingService.listBuildings();
+        buildingList = buildingService.listBuildings();
         return "mainpage";
     }
 
-    @RequestMapping(value = "/mainpage.html", method = RequestMethod.POST)
-    public void getAttenuationInputs(String latData, String lonData, String magData, String focData) {
-        ArrayList<Double> treeResult = new ArrayList<>();
+    @RequestMapping(value = "/mainpage.html", method = RequestMethod.POST, produces = "text/plain")
+    public @ResponseBody String getAttenuationInputs(String latData, String lonData, String magData, String focData) {
+       
         AttenuationAlgorithm aa = new AttenuationAlgorithm();
-        double result = aa.attenuation(Double.parseDouble(magData),
+       result = aa.attenuation(Double.parseDouble(magData),
                                        Double.parseDouble(latData), 
                                        Double.parseDouble(lonData), 40.123, 31.67, 
                                        Double.parseDouble(focData), 2);
-        System.out.println(result);
+        //System.out.println(result);
         treeResult = aa.decisionTree();
+        //System.out.println(treeResult.size());
+        String output = "";
+        
         for(int i= 0; i<treeResult.size(); i+=3)
         {
-            if(i < treeResult.size()/3)
-             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + 0.1 + "},");
-            else if(i < 2*treeResult.size()/3)
-             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + 0.5 + "},");
-            else
-             System.out.println("{location: new google.maps.LatLng(" + treeResult.get(i) + ", " + treeResult.get(i+1) + "), weight: " + 1 + "},");
+            
+           output += Double.toString(treeResult.get(i));
+           output += " ";
+           output += Double.toString(treeResult.get(i+1));
+           output += " ";
+           output += Double.toString(treeResult.get(i+2));
+           if(i!=treeResult.size()-1)output += ",";
+           
         }
+        
+        
+        return output;
+        
+        //return "abdsfsdfsdfc";
+        
+       
+       
     }
+     @RequestMapping(value = "/sendOutput.html", method = RequestMethod.GET)
+     public @ResponseBody String sendOutput(ModelMap model)
+    {
+      return "essol";
+       
+        
+        
+   
+
+
+    }
+    
+    
 }
