@@ -12,10 +12,19 @@ body{
 }
 
 #map-canvas{
-    width: 55em;
-    height: 40em;
-    margin-left: 45em;
-    margin-top: -5em;
+    width: 45vw;
+    height: 20vw;
+    margin-left: 45vw;
+    margin-top: 1vw;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 2px;
+}
+
+#realTime-canvas{
+    width: 45vw;
+    height: 20vw;
+    margin-left: 45vw;
+    margin-top: -5vw;
     border: 1px solid rgba(255,255,255,0.6);
     border-radius: 2px;
 }

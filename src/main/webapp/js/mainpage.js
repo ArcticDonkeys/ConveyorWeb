@@ -195,12 +195,16 @@ var bagcilar = new google.maps.Polygon({
 //var point = new google.maps.LatLng(60.981068, 29.061937);
 
 var mapCanvas = document.getElementById('map-canvas');
-    var mapOptions = {
-        center: new google.maps.LatLng(40.98352660152382, 29.07308578491211),
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-    var map = new google.maps.Map(mapCanvas,mapOptions);
+var mapOptions = {
+    center: new google.maps.LatLng(40.98352660152382, 29.07308578491211),
+    zoom: 13,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+}
+var map = new google.maps.Map(mapCanvas,mapOptions);
+
+
+var realTimeCanvas = document.getElementById('realTime-canvas');
+var realTimeMap = new google.maps.Map(realTimeCanvas, mapOptions);
 
 
 /*****************************************************/
@@ -331,7 +335,7 @@ function initializeMap()
     //createPoints();
     /*Haritada heat map oluşturur.*/
     //buildHeatMap(map);
-    buildRoute(map);
+    //buildRoute(map);
     /*Haritada route oluşturur.*/
     //calculateRoute(start, end);
 //    calculateRoute(start, end1);
@@ -356,6 +360,7 @@ function parseAndPush(dataFromController)
         
     }
     buildHeatMap(map);
+    buildRoute(map);
     
 }
 
