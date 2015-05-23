@@ -260,9 +260,17 @@ function buildHeatMap(){
        maxIntensity: 1
     });
     
+    var realTimeHeatMap = new google.maps.visualization.HeatmapLayer({
+       data: buildingLocations,
+       dissipating: true,
+       map: realTimeMap,
+       radius: 15,
+       maxIntensity: 1
+    });
+    
     //console.log(buildingLocations);
     
-    
+    realTimeHeatMap.setMap(realTimeMap);
     heatmap.setMap(map);
   
 }
@@ -433,14 +441,18 @@ function buildRoute()
                 });
 
 		directionsDisplay.setMap(map);	
+                directionsDisplay.setOptions({suppressMarkers: true});
 
 		directionsService.route(request1, function(response, status){
 
 			if(status === google.maps.DirectionsStatus.OK)
 			{
 				directionsDisplay.setDirections(response);
+                                refreshAmbulance(response.routes[0].overview_path);
 			}
 		});
+                
+                buildInfoWindow();
                 
                 var request2 = {
 			origin: afadCoordinates,
@@ -458,6 +470,7 @@ function buildRoute()
                 });
 
 		directionsDisplay2.setMap(map);	
+                directionsDisplay2.setOptions({suppressMarkers: true});
 
 		directionsService.route(request2, function(response, status){
 
@@ -483,7 +496,8 @@ function buildRoute()
                     preserveViewport: true
                 });
 
-		directionsDisplay3.setMap(map);	
+		directionsDisplay3.setMap(map);
+                directionsDisplay3.setOptions({suppressMarkers: true});
 
 		directionsService.route(request3, function(response, status){
 
@@ -511,6 +525,79 @@ function calculateRoute(start, end)
        {
            directionsDisplay.setDirections(response);
        }
+    });
+}
+
+function moveAmbulance(marker, latLng)
+{
+    marker.setPosition(latLng);
+    map.panTo(latLng);
+}
+
+function refreshAmbulance(pathCoords)
+{
+    var i, route, marker;
+    
+    route = new google.maps.Polyline({
+        path: [],
+        geodesic : true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        editable: false,
+        map:map
+    });
+    
+    marker=new google.maps.Marker({
+        map:map,
+        icon: 'http://i.imgur.com/9ruo5NW.png?1'
+    });
+
+    for (i = 0; i < pathCoords.length; i++) 
+    {                
+        setTimeout(function(coords) {
+            route.getPath().push(coords);
+            moveAmbulance(marker, coords);
+        }, 200 * i, pathCoords[i]);
+    }
+}
+
+function buildInfoWindow()
+{
+    var contentString = '<div style="color:black" id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>Most Risky Area</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+      'sandstone rock formation in the southern part of the '+
+      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+      'south west of the nearest large town, Alice Springs; 450&#160;km '+
+      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+      'Aboriginal people of the area. It has many springs, waterholes, '+
+      'rock caves and ancient paintings. Uluru is listed as a World '+
+      'Heritage Site.</p>'+
+      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+      '(last visited June 22, 2009).</p>'+
+      '</div>'+
+      '</div>';
+    
+    var infoWindow = new google.maps.InfoWindow({
+        content: contentString
+    }); 
+    
+    var marker = new google.maps.Marker({
+       position:  new google.maps.LatLng(40.9659004337, 29.0720558166),
+       map: map,
+       title: 'Deneme'
+    });
+    
+    
+    google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.open(map,marker);
     });
 }
 
